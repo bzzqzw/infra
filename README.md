@@ -5,6 +5,8 @@ Terraform + Ansible
 
 These ansible playbooks and roles are designed for demonstration purposes only. Do not use in your production environments without proper testing first.
 
+![logo](./images/logo.png)
+
 ## Abstract
 
 The Infrastructure as Code had considerable growth in the cloud lately.
