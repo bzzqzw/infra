@@ -18,7 +18,7 @@ terraform_vms:
     vcpu: 2
     disk_size: 50212254720
     host_naming: master-01
-    vm_public_ipv4_addr_cidr: 192.168.0.134/24
+    vm_public_ipv4_addr_cidr: 192.168.0.133/24
     vm_public_ipv4_gateway: 192.168.0.1
   - pool_id: "uscosvmeax11"
     group: k3s_master_cluster
@@ -27,15 +27,14 @@ terraform_vms:
     vcpu: 2
     disk_size: 50212254720
     host_naming: master-02
+    vm_public_ipv4_addr_cidr: 192.168.0.134/24
+    vm_public_ipv4_gateway: 192.168.0.1
+  - pool_id: "uscosvmeax11" 
+    group: k3s_worker_cluster
+    vm_template_name: "ubuntu-20.04-cloud-base"
+    memory_bytes: 2147467264
+    vcpu: 2
+    disk_size: 50212254720
+    host_naming: worker-01
     vm_public_ipv4_addr_cidr: 192.168.0.135/24
     vm_public_ipv4_gateway: 192.168.0.1
-
-  # - pool_id: "uscosvmeax11" 
-  #   group: k3s_worker_cluster
-  #   vm_template_name: "ubuntu-20.04-cloud-base"
-  #   memory_bytes: 2147467264
-  #   vcpu: 2
-  #   disk_size: 50212254720
-  #   host_naming: worker-01
-  #   vm_public_ipv4_addr_cidr: 127.0.0.2/24
-  #   vm_public_ipv4_gateway: 192.168.0.1
