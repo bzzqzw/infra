@@ -1,0 +1,7 @@
+---
+- name: Apply configuration via localhost
+  hosts: localhost
+  gather_facts: False
+  connection: local
+  roles:
+    - plan

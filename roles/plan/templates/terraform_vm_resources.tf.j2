@@ -1,0 +1,79 @@
+
+{% for vms in terraform_vms %}
+
+# Create cloudinit user template {{ vms.host_naming }}
+
+data "template_file" "{{ vms.host_naming }}_userdata" {
+  template = file("./cloud_userdata_cfg.yaml")
+  vars = {
+    hostname = "{{ vms.host_naming }}"
+  }
+}
+
+resource "xenorchestra_cloud_config" "{{ vms.host_naming }}_userdataconfig" {
+  name     = "user data config"
+  template = data.template_file.{{ vms.host_naming }}_userdata.rendered
+}
+
+
+
+# Create cloudinit metadata template {{ vms.host_naming }}
+
+data "template_file" "{{ vms.host_naming }}_metadata" {
+  template = file("./cloud_metadata_cfg.yaml")
+  vars = {
+    hostname  = "{{ vms.host_naming }}"
+    ipv4_addr_cidr = "{{ vms.vm_public_ipv4_addr_cidr }}"    
+    ipv4_gateway   = "{{ vms.vm_public_ipv4_gateway }}"
+  }
+}
+
+# XOA Infrastructure parametrization {{ vms.host_naming }}
+
+resource "xenorchestra_cloud_config" "{{ vms.host_naming }}_metadataconfig" {
+  name     = "network data config"
+  template = data.template_file.{{ vms.host_naming }}_metadata.rendered
+}
+
+data "xenorchestra_pool" "{{ vms.host_naming }}_pool" {
+  name_label = "{{ vms.pool_id }}"
+}
+
+data "xenorchestra_template" "{{ vms.host_naming }}_template" {
+  name_label = "{{ vms.vm_template_name }}"
+  pool_id    = data.xenorchestra_pool.{{ vms.host_naming }}_pool.id
+}
+
+data "xenorchestra_sr" "{{ vms.host_naming }}_sr" {
+  name_label = "Local storage"
+  pool_id    = data.xenorchestra_pool.{{ vms.host_naming }}_pool.id
+}
+
+data "xenorchestra_network" "{{ vms.host_naming }}_network" {
+  name_label = "Pool-wide network associated with eth0"
+  pool_id    = data.xenorchestra_pool.{{ vms.host_naming }}_pool.id
+}
+
+
+# VM creation {{ vms.host_naming }}
+
+resource "xenorchestra_vm" "{{ vms.host_naming }}" {
+  cloud_network_config = xenorchestra_cloud_config.{{ vms.host_naming }}_metadataconfig.template
+  cloud_config         = xenorchestra_cloud_config.{{ vms.host_naming }}_userdataconfig.template
+  memory_max           = {{ vms.memory_bytes }}
+  cpus                 = {{ vms.vcpu }}
+  name_label           = "{{ vms.host_naming }}"
+  template             = data.xenorchestra_template.{{ vms.host_naming }}_template.id
+
+  network {
+    network_id = data.xenorchestra_network.{{ vms.host_naming }}_network.id
+  }
+
+  disk {
+    sr_id      = data.xenorchestra_sr.{{ vms.host_naming }}_sr.id
+    name_label = "VM root volume"
+    size       = {{ vms.disk_size }}
+  }
+}
+
+{% endfor %}

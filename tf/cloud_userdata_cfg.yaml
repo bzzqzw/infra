@@ -1,0 +1,11 @@
+#cloud-config
+hostname: ${hostname}
+password: supersecretpassword!
+chpasswd: { expire: False }
+ssh_pwauth: False
+ssh_authorized_keys:
+  - ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAg6VerNwxyn1xSNDYD4GywushiG3F435jbJiKeRMNNw9s3CSuaIZvSKqhs5DJtJI40qOoREbLdRvxDfkpzNteOPDC+IW8U5+eP2IjFxIAC/5Q5i1LwpUBD/LdLY5hSsoStXScTC8bZ3TNNZjTG/aIAR9xoYUsjZyMdmuI1hm9Ou1dx6bHUPgVg//QThDUBPCgh3Rh57WXoYx8mvnG1RyxmSZk140uzNLqzIWz4Vs+8SX8kEs877oC3dS0fneq7bGQYyf1glzCaiSkuSb9usVFqPIjb9XWzGuRBszJxen7/UVilQd494RZcdHR99k6nFlo6sPK/QyKkhbo7XVa1IhYfQ== bzzqzw-key-20210320
+timezone: "America/Denver"
+package_update: true
+packages:
+  - xe-guest-utilities

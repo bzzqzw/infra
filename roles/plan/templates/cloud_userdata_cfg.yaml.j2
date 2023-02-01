@@ -1,0 +1,13 @@
+#cloud-config
+hostname: ${hostname}
+password: {{ cloud_init.cloud_password }}
+chpasswd: { expire: False }
+ssh_pwauth: False
+ssh_authorized_keys:
+{% for key in cloud_init.cloud_vm_public_key %}
+  - {{ key }}
+{% endfor %}
+timezone: "{{ cloud_init.cloud_timezone }}"
+package_update: true
+packages:
+  - xe-guest-utilities

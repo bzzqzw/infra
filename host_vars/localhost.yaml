@@ -1,0 +1,40 @@
+---
+xoa_credentials:
+  api_endpoint: "ws://192.168.0.243"
+  api_username: "xoa"  
+  api_password: "rZH$n6PbH"
+
+cloud_init:
+  cloud_password: "supersecretpassword!"
+  cloud_timezone: "America/Denver"
+  cloud_vm_public_key: 
+    - ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAg6VerNwxyn1xSNDYD4GywushiG3F435jbJiKeRMNNw9s3CSuaIZvSKqhs5DJtJI40qOoREbLdRvxDfkpzNteOPDC+IW8U5+eP2IjFxIAC/5Q5i1LwpUBD/LdLY5hSsoStXScTC8bZ3TNNZjTG/aIAR9xoYUsjZyMdmuI1hm9Ou1dx6bHUPgVg//QThDUBPCgh3Rh57WXoYx8mvnG1RyxmSZk140uzNLqzIWz4Vs+8SX8kEs877oC3dS0fneq7bGQYyf1glzCaiSkuSb9usVFqPIjb9XWzGuRBszJxen7/UVilQd494RZcdHR99k6nFlo6sPK/QyKkhbo7XVa1IhYfQ== bzzqzw-key-20210320
+
+terraform_vms:
+  - pool_id: "uscosvmeax11"
+    group: k3s_master_cluster
+    vm_template_name: "ubuntu-20.04-cloud-base"    
+    memory_bytes: 2147467264
+    vcpu: 2
+    disk_size: 50212254720
+    host_naming: master-01
+    vm_public_ipv4_addr_cidr: 192.168.0.134/24
+    vm_public_ipv4_gateway: 192.168.0.1
+  - pool_id: "uscosvmeax11"
+    group: k3s_master_cluster
+    vm_template_name: "ubuntu-20.04-cloud-base"
+    memory_bytes: 2147467264
+    vcpu: 2
+    disk_size: 50212254720
+    host_naming: master-02
+    vm_public_ipv4_addr_cidr: 192.168.0.135/24
+    vm_public_ipv4_gateway: 192.168.0.1
+  # - pool_id: "uscosvmeax11" 
+  #   group: k3s_worker_cluster
+  #   vm_template_name: "ubuntu-20.04-cloud-base"
+  #   memory_bytes: 2147467264
+  #   vcpu: 2
+  #   disk_size: 50212254720
+  #   host_naming: worker-01
+  #   vm_public_ipv4_addr_cidr: 127.0.0.2/24
+  #   vm_public_ipv4_gateway: 192.168.0.1
