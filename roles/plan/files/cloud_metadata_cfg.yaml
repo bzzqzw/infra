@@ -1,4 +1,4 @@
-#cloud-config
+# cloud-config
 local-hostname: ${hostname}
 instance-id: ${hostname}
 network:

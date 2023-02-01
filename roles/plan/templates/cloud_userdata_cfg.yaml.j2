@@ -1,8 +1,8 @@
-#cloud-config
+# cloud-config
 hostname: ${hostname}
 password: {{ cloud_init.cloud_password }}
-chpasswd: { expire: False }
-ssh_pwauth: False
+chpasswd: { expire: false }
+ssh_pwauth: false
 ssh_authorized_keys:
 {% for key in cloud_init.cloud_vm_public_key %}
   - {{ key }}

@@ -1,6 +1,6 @@
 ---
 - name: Copy provider config
-  copy:
+  ansible.builtin.copy:
     src: files/provider.tf
     dest: "{{ playbook_dir }}/tf/provider.tf"
     owner: root
@@ -8,7 +8,7 @@
     mode: "0644"
 
 - name: Create terraform credentials file
-  template:
+  ansible.builtin.template:
     src: credentials.auto.tfvars.j2
     dest: "{{ playbook_dir }}/tf/credentials.auto.tfvars"
     owner: root
@@ -16,7 +16,7 @@
     mode: "0644"
 
 - name: Copy cloud metadata config
-  copy:
+  ansible.builtin.copy:
     src: files/cloud_metadata_cfg.yaml
     dest: "{{ playbook_dir }}/tf/cloud_metadata_cfg.yaml"
     owner: root
@@ -24,29 +24,31 @@
     mode: "0644"
 
 - name: Substitute cloud_init userdata
-  template:
+  ansible.builtin.template:
     src: cloud_userdata_cfg.yaml.j2
     dest: "{{ playbook_dir }}/tf/cloud_userdata_cfg.yaml"
+    mode: "0600"
 
 - name: Substitute resources tf
-  template:
+  ansible.builtin.template:
     src: terraform_vm_resources.tf.j2
     dest: "{{ playbook_dir }}/tf/vm.tf"
+    mode: "0600"
 
 - name: Init Terraform
-  shell: |
+  ansible.builtin.shell: |
     cd {{ playbook_dir }}/tf;
     terraform init
   when: (operation == "init")
   register: init
 
 - name: "Display output: Init Terraform"
-  debug:
+  ansible.builtin.debug:
     msg: "{{ init.stdout }}"
   when: (operation == "init")
 
 - name: Create resources - Plan
-  shell: |
+  ansible.builtin.shell: |
     cd {{ playbook_dir }}/tf;
     terraform workspace new {{ env }}
     terraform workspace select {{ env }}
@@ -55,12 +57,12 @@
   register: create_plan
 
 - name: "Display output: Create resources - Plan"
-  debug:
+  ansible.builtin.debug:
     msg: "{{ create_plan.stdout }}"
   when: (operation == "create-plan")
 
 - name: Create resources
-  shell: |
+  ansible.builtin.shell: |
     cd {{ playbook_dir }}/tf;
     terraform workspace select {{ env }}
     terraform apply plan.tfplan
@@ -68,12 +70,12 @@
   register: create
 
 - name: "Display output: Create resources"
-  debug:
+  ansible.builtin.debug:
     msg: "{{ create.stdout }}"
   when: (operation == "create")
 
 - name: Destroy resources
-  shell: |
+  ansible.builtin.shell: |
     cd {{ playbook_dir }}/tf;
     terraform workspace new {{ env }}
     terraform workspace select {{ env }}
@@ -82,6 +84,6 @@
   register: destroy
 
 - name: "Display output: Destroy resources"
-  debug:
+  ansible.builtin.debug:
     msg: "{{ destroy.stdout }}"
   when: (operation == "destroy")

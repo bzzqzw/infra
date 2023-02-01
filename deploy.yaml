@@ -1,7 +1,11 @@
 ---
 - name: Apply configuration via localhost
   hosts: localhost
-  gather_facts: False
   connection: local
+  vars_files:
+    - host_vars/xcp_terraform_hosts.yaml
+
+  gather_facts: false
+
   roles:
     - plan
