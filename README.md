@@ -1,5 +1,5 @@
 # terraform-ansible-xcp: IaC for XCP-NG
-This Ansible playbook allows you to initialize and then deploy an entire infrastructure through the aid of Terraform, on a QEMU/KVM environment.
+This Ansible playbook allows you to initialize and then deploy an entire infrastructure through the aid of Terraform, on a XCP-NG environment.
 
 Terraform + Ansible
 
