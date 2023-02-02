@@ -12,4 +12,4 @@ These ansible playbooks and roles are designed for demonstration purposes only. 
 The Infrastructure as Code had considerable growth in the cloud lately.
 Using the Ansible flexibility and the Terraform power allows users to abstract both the creation and the provisioning of the entire infrastructure, describing the whole process in a single file, easy to read and to maintain on the long run.
 
-![logo](./images/terraform-ansible-xcp-flow.png)
+![flow](./images/terraform-ansible-xcp-flow.png)
